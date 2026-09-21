@@ -7,7 +7,6 @@ export default function MemberDetail({ selectedMember, onMemberUpdated }) {
   const [statusMessage, setStatusMessage] = useState('');
   const [error, setError] = useState('');
 
-  // When a user clicks "Edit" on the table, load them into this form
   useEffect(() => {
     if (selectedMember) {
       setMember({ ...selectedMember });
@@ -33,11 +32,11 @@ export default function MemberDetail({ selectedMember, onMemberUpdated }) {
     setStatusMessage('');
 
     try {
-      // Passes the hidden internal id and the updated data object (JSON) to the server
-      await UpdateMember(member.id, {
-        FirstName: member.FirstName,
-        LastName: member.LastName,
-        Employer: member.Employer,
+      await UpdateMember(member.recno, {
+        firstname: member.firstname,
+        lastname: member.lastname,
+        employer: member.employer,
+        memberid: member.memberid || member.MemberID
       });
       setStatusMessage('Changes successfully pushed to server!');
       if (onMemberUpdated) onMemberUpdated();
@@ -65,8 +64,8 @@ export default function MemberDetail({ selectedMember, onMemberUpdated }) {
           <label style={{ display: 'block', marginBottom: '5px' }}>First Name:</label>
           <input
             type="text"
-            name="FirstName"
-            value={member.FirstName || ''}
+            name="firstname"
+            value={member.firstname || ''}
             onChange={handleChange}
             style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }}
           />
@@ -76,8 +75,8 @@ export default function MemberDetail({ selectedMember, onMemberUpdated }) {
           <label style={{ display: 'block', marginBottom: '5px' }}>Last Name:</label>
           <input
             type="text"
-            name="LastName"
-            value={member.LastName || ''}
+            name="lastname"
+            value={member.lastname || ''}
             onChange={handleChange}
             style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }}
           />
@@ -87,8 +86,8 @@ export default function MemberDetail({ selectedMember, onMemberUpdated }) {
           <label style={{ display: 'block', marginBottom: '5px' }}>Employer:</label>
           <input
             type="text"
-            name="Employer"
-            value={member.Employer || ''}
+            name="employer"
+            value={member.employer || ''}
             onChange={handleChange}
             style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }}
           />

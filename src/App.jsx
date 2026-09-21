@@ -24,7 +24,8 @@ function App() {
       
       <MemberList 
         refreshTrigger={refreshTrigger} 
-        onSelectMember={(member) => setSelectedMember(member)} 
+        onSelectMember={(member) => setSelectedMember(member)}
+        onMemberDeleted={handleDataChange}
       />
 
       <MemberDetail 
