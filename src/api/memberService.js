@@ -128,13 +128,23 @@ export async function CreateMember(firstName, lastName, employer = "") {
     throw new Error("First Name and Last Name are required.");
   }
 
-  if (USE_MOCK_API) {
+if (USE_MOCK_API) {
     await new Promise((resolve) => setTimeout(resolve, 300));
     const db = getMockDb();
-    const newRecno = Object.keys(db).length + 1;
-    const newMember = { recno: newRecno, MemberID: (100 + newRecno).toString(), FirstName: firstName, LastName: lastName, Employer: employer };
     
-    db[newRecno] = newMember;
+    // Generate a unique incremental or timestamp-based key so it never overwrites existing records
+    const keys = Object.keys(db).map(Number);
+    const nextRecno = keys.length > 0 ? Math.max(...keys) + 1 : 1;
+    
+    const newMember = { 
+      recno: nextRecno, 
+      memberid: (100 + nextRecno).toString(), 
+      firstname: firstName, 
+      lastname: lastName, 
+      employer: employer 
+    };
+    
+    db[nextRecno.toString()] = newMember;
     saveMockDb(db);
     return newMember;
   }
