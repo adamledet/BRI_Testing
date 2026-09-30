@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import MemberList from './components/MemberList';
 import MemberDetail from './components/MemberDetail';
-import './App.css';
+// App.css removed: it only contained unused Vite starter styles.
 
 export default function App() {
   const [currentView, setCurrentView] = useState('Members');
@@ -25,7 +25,9 @@ export default function App() {
                 &larr; Back to Members
               </button>
               
+              {/* key forces a fresh component (and fresh stub fields) per member */}
               <MemberDetail 
+                key={selectedMember.recno ?? selectedMember.memberId}
                 selectedMember={selectedMember} 
                 onMemberUpdated={handleDataChange} 
               />
